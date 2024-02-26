@@ -8,8 +8,14 @@ public class Bird : MonoBehaviour
     [SerializeField] float _maxDragDistance = 3;
     [SerializeField] ParticleSystem _particleSystem;
 
+    [SerializeField] Sprite spriteNormal;
+    [SerializeField] Sprite spriteFly;
+    [SerializeField] Sprite spriteAngry;
+    [SerializeField] Sprite spriteDead;
+
     Vector2 _startPosition;
     Rigidbody2D _rigidbody2D;
+    PolygonCollider2D _polygonCollider;
     SpriteRenderer _spriteRenderer;
     bool _hasDied;
     Animator _animator;
@@ -18,6 +24,7 @@ public class Bird : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _polygonCollider = GetComponent<PolygonCollider2D>();
         _animator = GetComponent<Animator>();
     }
 
@@ -39,6 +46,7 @@ public class Bird : MonoBehaviour
     void OnMouseDown()
     {
         _spriteRenderer.color = Color.red;
+        _spriteRenderer.sprite = spriteAngry;
     }
 
     void OnMouseUp()
@@ -51,6 +59,7 @@ public class Bird : MonoBehaviour
         _rigidbody2D.AddForce(direction * _launchForce);
 
         _spriteRenderer.color = Color.white;
+        _spriteRenderer.sprite = spriteFly;
     }
 
     void OnMouseDrag()
@@ -78,24 +87,30 @@ public class Bird : MonoBehaviour
             _rigidbody2D.freezeRotation = false;
             _hasDied = true;
             _animator.SetBool("Dead",true);
+            _spriteRenderer.sprite = spriteDead;
             StartCoroutine(ResetAfterDelay());
         }
     }
 
     IEnumerator ResetAfterDelay()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
+        _rigidbody2D.simulated = false;
         _particleSystem.Play();
         _spriteRenderer.enabled = false;
-        yield return new WaitForSeconds(2);
-        _animator.SetBool("Dead", false);
         _rigidbody2D.freezeRotation = true;
-        _rigidbody2D.velocity = Vector2.zero;
         _rigidbody2D.isKinematic = true;
+        _polygonCollider.enabled = false;
+        yield return new WaitForSeconds(2);
+        _rigidbody2D.simulated = true;
+        _animator.SetBool("Dead", false);
+        _polygonCollider.enabled = true;
+        _rigidbody2D.velocity = Vector2.zero;
         _rigidbody2D.rotation = 0;
         _rigidbody2D.position = _startPosition;
         yield return new WaitForSeconds(1);
         _spriteRenderer.enabled = true;
+        _spriteRenderer.sprite = spriteNormal;
         _hasDied = false;
     }
 }

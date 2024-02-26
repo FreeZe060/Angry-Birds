@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    [SerializeField] float damageVelocity = 5f;
+    [SerializeField] float damageVelocity = 7f;
     [SerializeField] Sprite injuredSprite;
 
     SpriteRenderer _spriteRenderer;

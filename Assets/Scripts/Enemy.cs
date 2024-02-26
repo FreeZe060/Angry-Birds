@@ -5,30 +5,35 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float damageVelocity = 3f;
     [SerializeField] Sprite injuredSprite;
+    [SerializeField] ParticleSystem _particleSystem;
 
     SpriteRenderer _spriteRenderer;
+    PolygonCollider2D _polygonCollider;
+    Rigidbody2D _rigidbody2D;
     int _health = 2;
     bool _isDead = false;
 
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _polygonCollider = GetComponent<PolygonCollider2D>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (_isDead) return;
-
         float collisionForce = collision.relativeVelocity.magnitude;
+
         if (collisionForce >= damageVelocity)
         {
             _health -= 1;
+            UpdateSprite();
         }
-        if (collisionForce >= damageVelocity*2 || _health <= 0)
+        if (collisionForce >= damageVelocity*2 || _health <= 0 || collision.gameObject.CompareTag("Bird"))
         {
             StartCoroutine(Die());
         }
-        UpdateSprite();
     }
 
     void UpdateSprite(){
@@ -44,6 +49,10 @@ public class Enemy : MonoBehaviour
         _spriteRenderer.sprite = injuredSprite;
         _spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(1);
-        Destroy(gameObject);
+        _rigidbody2D.freezeRotation = true;
+        _spriteRenderer.enabled = false;
+        _rigidbody2D.simulated = false;
+        _polygonCollider.enabled = false;
+        _particleSystem.Play();
     }
 }

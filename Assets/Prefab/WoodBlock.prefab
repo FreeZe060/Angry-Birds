@@ -171,5 +171,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de32b4ecf6fd4f443964f42d4ce2341a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageVelocity: 5
+  damageVelocity: 7
   injuredSprite: {fileID: -1044275805, guid: bf03f328bc63c774b97524a1d8120540, type: 3}

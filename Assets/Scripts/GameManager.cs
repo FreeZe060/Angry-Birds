@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject finishObj;
+    GameObject[] _enemies;
+    [SerializeField] GameObject CanvasLvlFinish;
 
     void Start()
     {
@@ -14,11 +15,15 @@ public class GameManager : MonoBehaviour
     // Appelez cette fonction chaque fois qu'un ennemi est éliminé
     public void EnemyEliminated()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] _enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        if (enemies.Length == 0 && finishObj != null)
+        if (_enemies.Length == 0)
         {
-            finishObj.SetActive(true);
+            CanvasLvlFinish.SetActive(true);
         }
+    }
+
+    public void NxtLevel(){
+
     }
 }
