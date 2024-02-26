@@ -18,14 +18,12 @@ public class Bird : MonoBehaviour
     PolygonCollider2D _polygonCollider;
     SpriteRenderer _spriteRenderer;
     bool _hasDied;
-    // Animator _animator;
     
     void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _polygonCollider = GetComponent<PolygonCollider2D>();
-        // _animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -81,6 +79,10 @@ public class Bird : MonoBehaviour
             desiredPosition.x = _startPosition.x;
 
         _rigidbody2D.position = desiredPosition;
+
+        Vector2 directionstart = _startPosition - (Vector2)transform.position;
+        float angle = Mathf.Atan2(directionstart.y, directionstart.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     void OnCollisionEnter2D(Collision2D collision){

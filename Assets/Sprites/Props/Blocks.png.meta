@@ -1764,10 +1764,10 @@ TextureImporter:
       name: Blocks_78
       rect:
         serializedVersion: 2
-        x: 504
-        y: 413
-        width: 84
-        height: 84
+        x: 497
+        y: 479
+        width: 201
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1785,8 +1785,8 @@ TextureImporter:
       name: Blocks_79
       rect:
         serializedVersion: 2
-        x: 588
-        y: 413
+        x: 589
+        y: 410
         width: 84
         height: 84
       alignment: 0

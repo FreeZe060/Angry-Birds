@@ -21,15 +21,17 @@ public class Block : MonoBehaviour
         if (_isDestroyed) return;
 
         float collisionForce = collision.relativeVelocity.magnitude;
-        if (collisionForce >= damageVelocity)
-        {
-            _health -= 1;
-        }
+
         if (collisionForce >= damageVelocity*2 || _health <= 0)
         {
             Die();
         }
-        UpdateSprite();
+        else if (collisionForce >= damageVelocity)
+        {
+            _health -= 1;
+            UpdateSprite();
+        }
+        
     }
 
     void UpdateSprite(){

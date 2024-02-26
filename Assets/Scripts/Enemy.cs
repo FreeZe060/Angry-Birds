@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float damageVelocity = 3f;
     [SerializeField] Sprite injuredSprite;
+    [SerializeField] PolygonCollider2D headCollider;
     [SerializeField] ParticleSystem _particleSystem;
 
     GameManager _gameManager;
@@ -29,14 +30,21 @@ public class Enemy : MonoBehaviour
         if (_isDead) return;
         float collisionForce = collision.relativeVelocity.magnitude;
 
-        if (collisionForce >= damageVelocity)
-        {
-            _health -= 1;
-            UpdateSprite();
-        }
         if (collisionForce >= damageVelocity*2 || _health <= 0 || collision.gameObject.CompareTag("Bird"))
         {
             StartCoroutine(Die());
+        }
+        else if (collisionForce >= damageVelocity)
+        {
+            if (collision.collider == headCollider)
+            {
+                StartCoroutine(Die());
+            }
+            else
+            {
+                _health -= 1;
+                UpdateSprite();
+            }
         }
     }
 
