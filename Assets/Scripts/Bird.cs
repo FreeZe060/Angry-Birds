@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Bird : MonoBehaviour
 {
-    [SerializeField] float _launchForce = 1000;
-    [SerializeField] float _maxDragDistance = 3;
+    [SerializeField] float _launchForce = 700;
+    [SerializeField] float _maxDragDistance = 1.5f;
     [SerializeField] ParticleSystem _particleSystem;
 
     [SerializeField] Sprite spriteNormal;
@@ -18,14 +18,14 @@ public class Bird : MonoBehaviour
     PolygonCollider2D _polygonCollider;
     SpriteRenderer _spriteRenderer;
     bool _hasDied;
-    Animator _animator;
+    // Animator _animator;
     
     void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _polygonCollider = GetComponent<PolygonCollider2D>();
-        _animator = GetComponent<Animator>();
+        // _animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -54,7 +54,7 @@ public class Bird : MonoBehaviour
         Vector2 currentPosition = _rigidbody2D.position;
         Vector2 direction = _startPosition - currentPosition;
         direction.Normalize();
-
+    
         _rigidbody2D.isKinematic = false;
         _rigidbody2D.AddForce(direction * _launchForce);
 
@@ -73,6 +73,8 @@ public class Bird : MonoBehaviour
             Vector2 direction = desiredPosition - _startPosition;
             direction.Normalize();
             desiredPosition = _startPosition + (direction * _maxDragDistance);
+        }else{
+            _launchForce = 500 * distance;
         }
 
         if (desiredPosition.x > _startPosition.x)
@@ -86,7 +88,7 @@ public class Bird : MonoBehaviour
         {
             _rigidbody2D.freezeRotation = false;
             _hasDied = true;
-            _animator.SetBool("Dead",true);
+            // _animator.SetBool("Dead",true);
             _spriteRenderer.sprite = spriteDead;
             StartCoroutine(ResetAfterDelay());
         }
@@ -103,7 +105,7 @@ public class Bird : MonoBehaviour
         _polygonCollider.enabled = false;
         yield return new WaitForSeconds(2);
         _rigidbody2D.simulated = true;
-        _animator.SetBool("Dead", false);
+        // _animator.SetBool("Dead", false);
         _polygonCollider.enabled = true;
         _rigidbody2D.velocity = Vector2.zero;
         _rigidbody2D.rotation = 0;

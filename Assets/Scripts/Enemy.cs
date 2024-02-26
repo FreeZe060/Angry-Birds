@@ -7,17 +7,21 @@ public class Enemy : MonoBehaviour
     [SerializeField] Sprite injuredSprite;
     [SerializeField] ParticleSystem _particleSystem;
 
+    GameManager _gameManager;
     SpriteRenderer _spriteRenderer;
     PolygonCollider2D _polygonCollider;
     Rigidbody2D _rigidbody2D;
+    Animator _animator;
     int _health = 2;
     bool _isDead = false;
 
     void Awake()
     {
+        _gameManager = FindObjectOfType<GameManager>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _polygonCollider = GetComponent<PolygonCollider2D>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -40,6 +44,7 @@ public class Enemy : MonoBehaviour
         if (_health == 1)
         {
             _spriteRenderer.sprite = injuredSprite;
+            _animator.SetBool("isInjured", true);
         }
     }
 
@@ -54,5 +59,7 @@ public class Enemy : MonoBehaviour
         _rigidbody2D.simulated = false;
         _polygonCollider.enabled = false;
         _particleSystem.Play();
+        
+        _gameManager.EnemyEliminated();
     }
 }

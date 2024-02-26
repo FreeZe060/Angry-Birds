@@ -4983,6 +4983,7 @@ GameObject:
   - component: {fileID: 207504378856022611}
   - component: {fileID: 800922082741546653}
   - component: {fileID: 96840354186771979}
+  - component: {fileID: 2901247027851964555}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Enemy
@@ -5173,3 +5174,24 @@ MonoBehaviour:
   damageVelocity: 3
   injuredSprite: {fileID: 881992893, guid: af1ce4a4b67c96246a902899a240ecac, type: 3}
   _particleSystem: {fileID: 6550005651571132354}
+--- !u!95 &2901247027851964555
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5261319096692929292}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 635950df307923c49b806ed10322c703, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
